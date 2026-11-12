@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# Private notes and local settings: never commit
+CLAUDE.local.md
+.claude/settings.local.json
+.env

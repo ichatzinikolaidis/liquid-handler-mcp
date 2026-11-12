@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "liquid-handler": {
+      "command": "uv",
+      "args": ["run", "liquid-handler-mcp"]
+    }
+  }
+}

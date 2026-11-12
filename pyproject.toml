@@ -1,0 +1,47 @@
+[project]
+name = "liquid-handler-mcp"
+version = "0.1.0"
+description = "MCP server that lets Claude operate a simulated Opentrons OT-2 liquid handler"
+readme = "README.md"
+# opentrons declares 3.10 or newer, but `import opentrons.simulate` fails on 3.10 and 3.11:
+# a pydantic model in opentrons/protocol_engine/commands/vacuum_module/common.py has a
+# typing.TypedDict field, which pydantic accepts only from 3.12 (10.0.0 fails the same way).
+# On 3.13, opentrons' pin of numpy below 2 has no wheels.
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "mcp>=2.3,<3",
+    "opentrons>=10.1,<11",
+]
+
+[project.scripts]
+liquid-handler-mcp = "liquid_handler_mcp.server:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/liquid_handler_mcp"]
+
+[tool.uv]
+# opentrons 10.1.0 allows jsonschema only below 4.18, for reasons not established, and
+# mcp 2.3.0 needs 4.20 or newer. This lifts opentrons' limit. The tests check the simulator
+# still works. If it stops resolving or working, the fallback is the simulator in its own
+# environment without mcp, and the server talking to it over a pipe.
+override-dependencies = ["jsonschema>=4.20.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
