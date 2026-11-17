@@ -3,6 +3,8 @@ name = "liquid-handler-mcp"
 version = "0.1.0"
 description = "MCP server that lets Claude operate a simulated Opentrons OT-2 liquid handler"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 # opentrons declares 3.10 or newer, but `import opentrons.simulate` fails on 3.10 and 3.11:
 # a pydantic model in opentrons/protocol_engine/commands/vacuum_module/common.py has a
 # typing.TypedDict field, which pydantic accepts only from 3.12 (10.0.0 fails the same way).
